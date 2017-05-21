@@ -17,11 +17,11 @@ public class AlunoBean extends PessoaBean {
 	public void setId_aluno(Integer id_aluno) {
 		this.id_aluno = id_aluno;
 	}
-
+ 
 	public Integer getPeriodo() {
 		return periodo;
 	}
-
+ 
 	public void setPeriodo(Integer periodo) {
 		this.periodo = periodo;
 	} 

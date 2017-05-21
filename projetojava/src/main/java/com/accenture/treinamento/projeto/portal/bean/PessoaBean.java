@@ -111,7 +111,7 @@ public class PessoaBean {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
+ 
 	public Integer getCep() {
 		return cep;
 	}
