@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.fileupload.RequestContext;
 
 import com.accenture.treinamento.projeto.portal.bean.AutorBean;
+import com.accenture.treinamento.projeto.portal.dao.autorDAO;
 
 @ManagedBean
 @SessionScoped
