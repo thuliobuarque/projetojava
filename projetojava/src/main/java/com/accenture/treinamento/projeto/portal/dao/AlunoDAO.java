@@ -77,7 +77,7 @@ public class AlunoDAO implements IAlunoDAO {
 		}
 	}
 
-	public Boolean alterarAluno(AlunoBean aluno)
+	public boolean alterarAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean alterou = false;
 		String sql = "update acl.alunos set nome = ?, senha = ? where idalunos = ?";
@@ -104,7 +104,7 @@ public class AlunoDAO implements IAlunoDAO {
 		}
 	}
 	
-	public Boolean excluirAluno(AlunoBean aluno)
+	public boolean excluirAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean excluir = false;
 		String sql = "delete from acl.alunos where idalunos = ?";
