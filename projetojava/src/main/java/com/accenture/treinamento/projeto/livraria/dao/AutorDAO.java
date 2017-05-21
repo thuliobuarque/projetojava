@@ -1,14 +1,16 @@
-package com.accenture.treinamento.projeto.portal.dao;
+package com.accenture.treinamento.projeto.livraria.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.resource.cci.ConnectionFactory;
+import com.accenture.treinamento.projeto.factory.ConnectionFactory;
+import com.accenture.treinamento.projeto.livraria.model.AutorBean;
 
-import com.accenture.treinamento.projeto.portal.bean.AutorBean;
-import com.mysql.jdbc.Connection;
 
-public class autorDAO implements IautorDAO {
+
+public class AutorDAO implements IAutorDAO {
 
 	private Connection conexao = null;
 	

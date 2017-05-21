@@ -1,4 +1,4 @@
-package com.accenture.treinamento.projeto.portal.bean;
+package com.accenture.treinamento.projeto.portal.model;
 
 import java.util.Date;
 

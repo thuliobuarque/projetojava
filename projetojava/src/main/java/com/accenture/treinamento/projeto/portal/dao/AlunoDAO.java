@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
-import com.accenture.treinamento.projeto.portal.bean.AlunoBean;
+import com.accenture.treinamento.projeto.portal.model.AlunoBean;
 
 public class AlunoDAO implements IAlunoDAO {
 

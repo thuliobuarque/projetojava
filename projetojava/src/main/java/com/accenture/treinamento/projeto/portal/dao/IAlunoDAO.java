@@ -5,7 +5,7 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
-import com.accenture.treinamento.projeto.portal.bean.AlunoBean;
+import com.accenture.treinamento.projeto.portal.model.AlunoBean;
 
 public interface IAlunoDAO {
 
