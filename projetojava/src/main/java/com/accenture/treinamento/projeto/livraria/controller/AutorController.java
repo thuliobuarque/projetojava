@@ -1,5 +1,8 @@
 package com.accenture.treinamento.projeto.livraria.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -7,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.livraria.dao.AutorDAO;
 import com.accenture.treinamento.projeto.livraria.model.AutorBean;
 
@@ -15,12 +19,12 @@ import com.accenture.treinamento.projeto.livraria.model.AutorBean;
 public class AutorController {
 
 	private AutorBean autor;
-	
+
 	private List<AutorBean> listaAutor;
 
 	public AutorController() {
 		autor = new AutorBean();
-		
+
 		listaAutor = new ArrayList<>();
 		listaAutor = null;
 	}
@@ -36,26 +40,24 @@ public class AutorController {
 					"Autor cadastrado com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance()
-					.execute("dlgCadAutor.hide();");
+			RequestContext.getCurrentInstance().execute("dlgCadAutor.hide();");
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Ocorreu um erro durante o cadastro!", "Erro");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance()
-					.execute("dlgCadAutor.hide();");
+			RequestContext.getCurrentInstance().execute("dlgCadAutor.hide();");
 		}
 
 	}
-	
+
 	public void alterarAutor() throws ProjetoException {
-		
+
 		AutorDAO adao = new AutorDAO();
 		boolean alterou = adao.alterarAutor(autor);
-		
+
 		if (alterou == true) {
-			
+
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Autor alterado com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -69,11 +71,11 @@ public class AutorController {
 			RequestContext.getCurrentInstance().execute("dlgAltAutor.hide();");
 		}
 	}
-	
+
 	public void excluirAutor() throws ProjetoException {
 		AutorDAO adao = new AutorDAO();
 		boolean excluiu = adao.excluirAutor(autor);
-		
+
 		if (excluiu == true) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Autor excluido com sucesso!", "Sucesso");
@@ -102,16 +104,17 @@ public class AutorController {
 	public void setAutor(AutorBean autor) {
 		this.autor = autor;
 	}
-	
+
 	public List<AutorBean> getListaAutor() {
 		if (listaAutor == null) {
 			AutorDAO adao = new AutorDAO();
 			listaAutor = adao.listaAutor();
-			
+
 		}
 		return listaAutor;
 	}
-	publicvoid setListaAutor(List<AutorBean> listaAutor) {
+
+	public void setListaAutor(List<AutorBean> listaAutor) {
 		this.listaAutor = listaAutor;
 	}
 
