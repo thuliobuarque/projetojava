@@ -15,9 +15,14 @@ import com.accenture.treinamento.projeto.livraria.model.AutorBean;
 public class AutorController {
 
 	private AutorBean autor;
+	
+	private List<AutorBean> listaAutor;
 
 	public AutorController() {
 		autor = new AutorBean();
+		
+		listaAutor = new ArrayList<>();
+		listaAutor = null;
 	}
 
 	public void cadastrarAutor() {
@@ -43,6 +48,48 @@ public class AutorController {
 		}
 
 	}
+	
+	public void alterarAutor() throws ProjetoException {
+		
+		AutorDAO adao = new AutorDAO();
+		boolean alterou = adao.alterarAutor(autor);
+		
+		if (alterou == true) {
+			
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Autor alterado com sucesso!", "Sucesso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+			RequestContext.getCurrentInstance().execute("dlgAltAutor.hide();");
+		} else {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Ocorreu um erro durante o cadastro!", "Erro");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+			RequestContext.getCurrentInstance().execute("dlgAltAutor.hide();");
+		}
+	}
+	
+	public void excluirAutor() throws ProjetoException {
+		AutorDAO adao = new AutorDAO();
+		boolean excluiu = adao.excluirAutor(autor);
+		
+		if (excluiu == true) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Autor excluido com sucesso!", "Sucesso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			// listaLaudo = null;
+			RequestContext.getCurrentInstance().execute(
+					"PF('dialogAtencao').hide();");
+		} else {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Ocorreu um erro durante a exclusao!", "Erro");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+			RequestContext.getCurrentInstance().execute(
+					"PF('dialogAtencao').hide();");
+		}
+	}
 
 	public void limparObjeto() {
 		autor = null;
@@ -54,6 +101,18 @@ public class AutorController {
 
 	public void setAutor(AutorBean autor) {
 		this.autor = autor;
+	}
+	
+	public List<AutorBean> getListaAutor() {
+		if (listaAutor == null) {
+			AutorDAO adao = new AutorDAO();
+			listaAutor = adao.listaAutor();
+			
+		}
+		return listaAutor;
+	}
+	publicvoid setListaAutor(List<AutorBean> listaAutor) {
+		this.listaAutor = listaAutor;
 	}
 
 }
