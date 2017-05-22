@@ -15,20 +15,19 @@ public class DisciplinaDAO implements IDisciplinaDAO {
 
 	private Connection conexao = null;
 
-	
-	public boolean cadastrarDisciplina(DisciplinaBean disciplina) throws ProjetoException {
+	public boolean cadastrarDisciplina(DisciplinaBean disciplina)
+			throws ProjetoException {
 
-		String sql = "insert into acl.disciplina (nome, cargaHoraria, professor, id, turma) values (?, ?,?, ? ,?)";
+		String sql = "insert into acl.disciplina (nome, cargaHoraria) values (?, ?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, disciplina.getNome());
-			stmt.setString(2, disciplina.getCargaHoraria());
-			stmt.setString(3, disciplina.getProfessor());
-			stmt.setString(4, disciplina.getId());
-			stmt.setString(5, disciplina.getTurma());
-			
+			stmt.setInt(2, disciplina.getCargaHoraria());
+			// stmt.setString(3, disciplina.getProfessor());
+			// stmt.setString(5, disciplina.getTurma());
+
 			stmt.execute();
 
 			conexao.commit();
@@ -49,19 +48,19 @@ public class DisciplinaDAO implements IDisciplinaDAO {
 	public boolean alterarDisciplina(DisciplinaBean disciplina)
 			throws ProjetoException {
 		boolean alterou = false;
-		String sql = "update acl.disciplina set nome = ?, cargaHoraria = ?, professor = ?, id = ?, turma = ? where id = ?";
+		String sql = "update acl.disciplina set nome = ?, cargaHoraria = ? where id = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, disciplina.getNome());
-			stmt.setString(2, disciplina.getCargaHoraria());
-			stmt.setString(3, disciplina.getProfessor());
-			stmt.setString(4, disciplina.getId());
-			stmt.setString(5, disciplina.getTurma());
-			
+			stmt.setInt(2, disciplina.getCargaHoraria());
+			// stmt.setString(3, disciplina.getProfessor());
+			// stmt.setString(4, disciplina.getTurma());
+			stmt.setInt(3, disciplina.getId());
+
 			stmt.executeUpdate();
 			conexao.commit();
-						
+
 			alterou = true;
 
 			return alterou;
@@ -75,7 +74,7 @@ public class DisciplinaDAO implements IDisciplinaDAO {
 			}
 		}
 	}
-	
+
 	public boolean excluirDisciplina(DisciplinaBean disciplina)
 			throws ProjetoException {
 		boolean excluir = false;
@@ -101,11 +100,10 @@ public class DisciplinaDAO implements IDisciplinaDAO {
 			}
 		}
 	}
-	
-	
+
 	public ArrayList<DisciplinaBean> listaDisciplina() {
 
-		String sql = "select nome, cargaHoraria, professor, id, turma from acl.turma order by nome";
+		String sql = "select nome, cargaHoraria, professor, id from acl.turma order by nome";
 
 		ArrayList<DisciplinaBean> lista = new ArrayList();
 		try {
@@ -114,17 +112,15 @@ public class DisciplinaDAO implements IDisciplinaDAO {
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
-				DisciplinaBean a = new DisciplinaBean();
+				DisciplinaBean d = new DisciplinaBean();
 
-				a.setNome(rs.getString("nome"));
-				a.setCargaHoraria(rs.getInt("cargaHoraria"));
-				a.setProfessor(rs.getString("professor"));
-				a.setId(rs.getInt("id"));
-				a.setTurma(rs.getTurma("turma"));
-				
+				d.setNome(rs.getString("nome"));
+				d.setCargaHoraria(rs.getInt("cargaHoraria"));
+				// a.setProfessor(rs.getString("professor"));
+				d.setId(rs.getInt("id"));
+				// d.setTurma(rs.getTurma("turma"));
 
-
-				lista.add(a);
+				lista.add(d);
 			}
 		} catch (SQLException ex) {
 			throw new RuntimeException(ex);

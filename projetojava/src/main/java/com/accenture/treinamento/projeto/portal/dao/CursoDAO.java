@@ -15,21 +15,18 @@ public class CursoDAO implements ICursoDAO {
 
 	private Connection conexao = null;
 
-	conexao = ConnectionFactory.getConnection();
-
-		
 	public boolean cadastrarCurso(CursoBean curso) throws ProjetoException {
 
-		String sql = "insert into acl.curso (id, codigoCurso, nomeCurso, disciplina) values (?, ?, ? ?)";
+		String sql = "insert into acl.curso (id, codigoCurso, nomeCurso) values (?, ?, ?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, curso.getId());
+			stmt.setInt(1, curso.getId());
 			stmt.setString(2, curso.getCodigoCurso());
 			stmt.setString(3, curso.getNomeCurso());
-			stmt.setString(4, curso.getDisciplina());
-			
+			// stmt.setString(4, curso.getDisciplina());
+
 			stmt.execute();
 
 			conexao.commit();
@@ -47,18 +44,17 @@ public class CursoDAO implements ICursoDAO {
 		}
 	}
 
-	public boolean alterarCurso(CursoBean curso)
-			throws ProjetoException {
+	public boolean alterarCurso(CursoBean curso) throws ProjetoException {
 		boolean alterou = false;
-		String sql = "update acl.curso set id = ?, codigoCurso = ?, nomeCurso = ?, disciplina = ? where id = ?";
+		String sql = "update acl.curso set codigoCurso = ?, nomeCurso = ? where id = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, curso.getId());
-			stmt.setString(2, curso.getCodigoCurso());
-			stmt.setString(3, curso.getNomeCurso());
-			stmt.setString(4, curso.getDisciplina());
-			
+			stmt.setString(1, curso.getCodigoCurso());
+			stmt.setString(2, curso.getNomeCurso());
+			stmt.setInt(3, curso.getId());
+			// stmt.setString(4, curso.getDisciplina());
+
 			stmt.executeUpdate();
 			conexao.commit();
 
@@ -75,9 +71,8 @@ public class CursoDAO implements ICursoDAO {
 			}
 		}
 	}
-	
-	public boolean excluirCurso(CursoBean curso)
-			throws ProjetoException {
+
+	public boolean excluirCurso(CursoBean curso) throws ProjetoException {
 		boolean excluir = false;
 		String sql = "delete from acl.cursos where id = ?";
 		try {
@@ -102,10 +97,9 @@ public class CursoDAO implements ICursoDAO {
 		}
 	}
 
-	
 	public ArrayList<CursoBean> listaCurso() {
 
-		String sql = "select ac1.id, ac1.codigoCurso, ac1.nomeCurso, ac2.disciplina from acl.curso, ac2.disciplina order by nomeCurso";
+		String sql = "select id, codigoCurso, nomeCurso from acl.curso order by nomeCurso";
 
 		ArrayList<CursoBean> lista = new ArrayList();
 		try {
@@ -114,15 +108,14 @@ public class CursoDAO implements ICursoDAO {
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
-				CursoBean a = new CursoBean();
+				CursoBean c = new CursoBean();
 
-				a.setId(rs.getInt("id"));
-				a.setCodigoCurso(rs.getString("codigoCurso"));
-				a.setNomeCurso(rs.getString("nomeCurso"));
-				a.setDisciplina(rs.getString("disciplina"));
+				c.setId(rs.getInt("id"));
+				c.setCodigoCurso(rs.getString("codigoCurso"));
+				c.setNomeCurso(rs.getString("nomeCurso"));
+				// a.setDisciplina(rs.getString("disciplina"));
 
-
-				lista.add(a);
+				lista.add(c);
 			}
 		} catch (SQLException ex) {
 			throw new RuntimeException(ex);

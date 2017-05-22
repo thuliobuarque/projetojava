@@ -1,5 +1,8 @@
 package com.accenture.treinamento.projeto.portal.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -7,34 +10,40 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
-
-
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.portal.model.DisciplinaBean;
 import com.accenture.treinamento.projeto.portal.dao.AlunoDAO;
 import com.accenture.treinamento.projeto.portal.dao.DisciplinaDAO;
 
 /**
-*
-* @author Thulio, thayse, Thales, Caio, Priscila, Veridiana
-* @since 21/05/2017
-*/
+ *
+ * @author Thulio, thayse, Thales, Caio, Priscila, Veridiana
+ * @since 21/05/2017
+ */
 
 @ManagedBean(name = "MBDisciplinas")
 @SessionScoped
 public class DisciplinaController {
 
 	private DisciplinaBean disciplina;
-	
+
+	// LISTAS
+	private List<DisciplinaBean> listaDisciplina;
+
 	public DisciplinaController() {
+		// INSTANCIAS
 		disciplina = new DisciplinaBean();
+
+		// LISTAS
+		listaDisciplina = new ArrayList<>();
+		listaDisciplina = null;
 
 	}
 
-	public void cadastrarDisciplina() {
+	public void cadastrarDisciplina() throws ProjetoException {
 
 		DisciplinaDAO Ddao = new DisciplinaDAO();
-		
+
 		boolean cadastrou = Ddao.cadastrarDisciplina(disciplina);
 
 		if (cadastrou == true) {
@@ -43,19 +52,18 @@ public class DisciplinaController {
 					"Disciplina cadastrada com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance()
-					.execute("dlgCadSistema.hide();");
+			RequestContext.getCurrentInstance().execute(
+					"dlgCadDisciplina.hide();");
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Ocorreu um erro durante o cadastro da disciplina!", "Erro");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance()
-					.execute("dlgCadSistema.hide();");
+			RequestContext.getCurrentInstance().execute(
+					"dlgCadDisciplina.hide();");
 		}
 	}
-	
-	
+
 	// METODO DE ALTERAR DISCIPLINA
 	public void alterarDisciplina() throws ProjetoException {
 
@@ -68,13 +76,15 @@ public class DisciplinaController {
 					"Disciplina alterada com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance().execute("dlgAltAluno.hide();");
+			RequestContext.getCurrentInstance().execute(
+					"dlgAltDisciplina.hide();");
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Ocorreu um erro durante o cadastro!", "Erro");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-			RequestContext.getCurrentInstance().execute("dlgAltAluno.hide();");
+			RequestContext.getCurrentInstance().execute(
+					"dlgAltDisciplina.hide();");
 		}
 	}
 
@@ -101,9 +111,6 @@ public class DisciplinaController {
 		}
 	}
 
-	
-	
-
 	public void LimparObjeto() {
 		disciplina = null;
 	}
@@ -114,6 +121,18 @@ public class DisciplinaController {
 
 	public void setDisciplina(DisciplinaBean disciplina) {
 		this.disciplina = disciplina;
+	}
+
+	public List<DisciplinaBean> getListaDisciplina() {
+		if (listaDisciplina == null) {
+			DisciplinaDAO ddao = new DisciplinaDAO();
+			listaDisciplina = ddao.listaDisciplina();
+		}
+		return listaDisciplina;
+	}
+
+	public void setListaDisciplina(List<DisciplinaBean> listaDisciplina) {
+		this.listaDisciplina = listaDisciplina;
 	}
 
 }
