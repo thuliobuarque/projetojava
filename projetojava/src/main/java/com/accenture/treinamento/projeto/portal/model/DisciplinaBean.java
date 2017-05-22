@@ -2,15 +2,15 @@ package com.accenture.treinamento.projeto.portal.model;
 
 public class DisciplinaBean {
 	
-	private int codigo;
+	private int id;
 	private String nome;
 	private int cargaHoraria;
 	private ProfessorBean professor;
-	public int getCodigo() {
-		return codigo;
+	public int getId() {
+		return id;
 	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;
