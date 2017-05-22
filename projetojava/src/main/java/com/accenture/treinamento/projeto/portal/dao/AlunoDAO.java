@@ -54,12 +54,13 @@ public class AlunoDAO implements IAlunoDAO {
 
 	public boolean cadastrarAluno(AlunoBean aluno) throws ProjetoException {
 
-		String sql = "insert into acl.alunos (nome) values (?)";
+		String sql = "insert into acl.alunos (nome, cpf) values (?, ?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, aluno.getNome());
+			stmt.setString(2, aluno.getCpf());
 			stmt.execute();
 
 			conexao.commit();
@@ -80,11 +81,12 @@ public class AlunoDAO implements IAlunoDAO {
 	public boolean alterarAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean alterou = false;
-		String sql = "update acl.alunos set nome = ? where idalunos = ?";
+		String sql = "update acl.alunos set nome = ?, cpf = ? where idalunos = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, aluno.getNome());
+			stmt.setString(2, aluno.getCpf());
 			stmt.setInt(2, aluno.getId_aluno());
 			stmt.executeUpdate();
 			conexao.commit();
@@ -168,10 +170,13 @@ public class AlunoDAO implements IAlunoDAO {
 	 public List<AlunoBean> buscarTipoAluno(String valor, Integer tipo) throws ProjetoException {
 	  		
 	      	
-   		 String sql = "select idalunos, nome from acl.alunos where";
+   		 String sql = "select idalunos, nome, cpf from acl.alunos where";
    		
    		if (tipo == 1) {
    			sql += " alunos.nome like ? order by alunos.nome ";
+   		}
+   		if (tipo == 2) {
+   			sql += " alunos.cpf like ? order by alunos.nome ";
    		}
    		List<AlunoBean> lista = new ArrayList<>();
    	
@@ -179,6 +184,9 @@ public class AlunoDAO implements IAlunoDAO {
    			conexao = ConnectionFactory.getConnection();
    			PreparedStatement stmt = conexao.prepareStatement(sql);
    			if (tipo == 1) {
+   				stmt.setString(1, "%" + valor.toUpperCase() + "%");
+   			}
+   			if (tipo == 2) {
    				stmt.setString(1, "%" + valor.toUpperCase() + "%");
    			}
 
@@ -189,6 +197,8 @@ public class AlunoDAO implements IAlunoDAO {
 
    				c.setId_aluno(rs.getInt("idalunos"));
 				c.setNome(rs.getString("nome"));
+				c.setCpf(rs.getString("cpf"));
+
 
    				lista.add(c);
 
