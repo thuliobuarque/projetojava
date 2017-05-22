@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.context.RequestContext;
 
@@ -59,15 +60,16 @@ public class AlunoController {
 
 		AlunoDAO ud = new AlunoDAO();
 		aluno = ud.autenticarAluno(aluno);
-
+		//recoverDataFromSessionAluno();
 		if (aluno == null) {
 			FacesContext fct = FacesContext.getCurrentInstance();
 			fct.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Usuário ou senha inválidos!", "Erro"));
 
 			return "";
-		} else {
-
+		} else {			
+			 //HttpSession session = SessionUtil.getSession();
+             //session.setAttribute("usuario", aluno.getNome());
 			return "/pages/comum/principal.faces?faces-redirect=true";
 		}
 	}
@@ -159,6 +161,13 @@ public class AlunoController {
 		}
 
 	}
+	
+	 public void recoverDataFromSessionAluno() {
+	        aluno = (AlunoBean) FacesContext
+	            .getCurrentInstance().getExternalContext().getSessionMap()
+	            .get("obj_aluno");
+	        
+	    }
 	
     public String logout() {
         SessionUtil.getSession().invalidate();
