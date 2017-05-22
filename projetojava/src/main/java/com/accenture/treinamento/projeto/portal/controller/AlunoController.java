@@ -5,13 +5,16 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 import org.primefaces.context.RequestContext;
+
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.portal.dao.AlunoDAO;
 import com.accenture.treinamento.projeto.portal.model.AlunoBean;
+import com.accenture.treinamento.projeto.portal.model.PessoaBean;
+import com.accenture.treinamento.projeto.util.SessionUtil;
 
 /**
  *
@@ -20,7 +23,7 @@ import com.accenture.treinamento.projeto.portal.model.AlunoBean;
  */
 
 @ManagedBean(name = "MBAlunos")
-@SessionScoped
+@ViewScoped
 public class AlunoController {
 
 	// OBJETOS E CLASSES
@@ -28,6 +31,12 @@ public class AlunoController {
 
 	// LISTAS
 	private List<AlunoBean> listaAluno;
+	
+	// BUSCAS
+	private String tipo;
+	private Integer tipoBuscaAluno;
+	private String campoBuscaAluno;
+	private String statusAluno;
 
 	public AlunoController() {
 		// INSTANCIAS
@@ -36,6 +45,12 @@ public class AlunoController {
 		// LISTAS
 		listaAluno = new ArrayList<>();
 		listaAluno = null;
+		
+		// BUSCA
+		tipo = "";
+		tipoBuscaAluno = 1;
+		campoBuscaAluno = "";
+		statusAluno = "P";
 
 	}
 
@@ -68,7 +83,7 @@ public class AlunoController {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Aluno cadastrado com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-
+			listaAluno = null;
 			RequestContext.getCurrentInstance().execute("dlgCadAluno.hide();");
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -90,7 +105,7 @@ public class AlunoController {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Aluno alterado com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-
+			listaAluno = null;
 			RequestContext.getCurrentInstance().execute("dlgAltAluno.hide();");
 		} else {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -102,7 +117,7 @@ public class AlunoController {
 	}
 
 	// METODO DE EXCLUIR ALUNO
-	public void excluirProduto() throws ProjetoException {
+	public void excluirAluno() throws ProjetoException {
 		AlunoDAO adao = new AlunoDAO();
 		boolean excluio = adao.excluirAluno(aluno);
 
@@ -111,7 +126,7 @@ public class AlunoController {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Aluno excluido com sucesso!", "Sucesso");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
-			// listaLaudo = null;
+			listaAluno = null;
 			RequestContext.getCurrentInstance().execute(
 					"PF('dialogAtencao').hide();");
 		} else {
@@ -123,9 +138,44 @@ public class AlunoController {
 					"PF('dialogAtencao').hide();");
 		}
 	}
+	
+	public void buscarAlunos() throws ProjetoException {
 
-	public void LimparObjeto() {
-		aluno = null;
+		List<AlunoBean> listaAux = null;
+		listaAluno = new ArrayList<>();
+
+		AlunoDAO adao = new AlunoDAO();
+
+		listaAux = adao.buscarTipoAluno(campoBuscaAluno, tipoBuscaAluno);
+
+		if (listaAux != null && listaAux.size() > 0) {
+			// listaAss = null;
+			listaAluno = listaAux;
+		} else {
+			// listaAss = null;
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
+					"Nenhum Aluno encontrada.", "Aviso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+
+	}
+	
+    public String logout() {
+        SessionUtil.getSession().invalidate();
+        return "/pages/comum/login.faces?faces-redirect=true";
+    }
+	
+	public void limparBuscaDados() {
+		tipoBuscaAluno = 1;
+		campoBuscaAluno = "";
+		statusAluno = "P";
+		listaAluno = null;
+	}
+
+	public void limparDados() {
+		aluno = new AlunoBean();
+		PessoaBean pessoa = new PessoaBean();
+
 	}
 
 	public AlunoBean getAluno() {
@@ -147,5 +197,39 @@ public class AlunoController {
 	public void setListaAluno(List<AlunoBean> listaAluno) {
 		this.listaAluno = listaAluno;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Integer getTipoBuscaAluno() {
+		return tipoBuscaAluno;
+	}
+
+	public void setTipoBuscaAluno(Integer tipoBuscaAluno) {
+		this.tipoBuscaAluno = tipoBuscaAluno;
+	}
+
+	public String getCampoBuscaAluno() {
+		return campoBuscaAluno;
+	}
+
+	public void setCampoBuscaAluno(String campoBuscaAluno) {
+		this.campoBuscaAluno = campoBuscaAluno;
+	}
+
+	public String getStatusAluno() {
+		return statusAluno;
+	}
+
+	public void setStatusAluno(String statusAluno) {
+		this.statusAluno = statusAluno;
+	}
+	
+	
 
 }

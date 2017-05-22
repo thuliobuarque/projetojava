@@ -21,17 +21,17 @@
 							<p:outputLabel value="Usuário: " for="usuario" />
 							<p:inputText id="usuario" size="20" required="true"
 								requiredMessage="Informe o usuário."
-								value="#{MBUsuarios.usuario.login}" />
+								value="#{MBAlunos.aluno.login}" />
 
 							<p:outputLabel value="Senha: " for="senha" />
 							<p:password id="senha" size="20" required="true"
 								requiredMessage="Informe a Senha."
-								value="#{MBUsuarios.usuario.senha}" maxlength="200" />
+								value="#{MBAlunos.aluno.senha}" maxlength="200" />
 						</p:panelGrid>
 
 						<p:separator />
 						<p:commandButton value="Entrar" icon="entrar"
-							action="#{MBUsuarios.login()}" update="growl, pnl" />
+							action="#{MBAlunos.login()}" update="growl, pnl" />
 					</center>
 				</p:panel>
 			</center>

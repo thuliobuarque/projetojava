@@ -9,12 +9,13 @@
 		<title>ACCPORTAL - Sistema Integrado do Portal Accenture</title>
 	</ui:insert>
 
-	<link rel="StyleSheet" type="text/css" href="../css/style.css" />
-	<link rel="StyleSheet" type="text/css" href="../css/bootstrap.css" />
-	<link type="text/css" rel="stylesheet" href="../css/estilo2.css" />
-	<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="StyleSheet" type="text/css" href="../../css/style.css" />
+	<link rel="StyleSheet" type="text/css" href="../../css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="../../css/estilo2.css" />
 	<link type="text/css" rel="stylesheet"
-		href="../css/bootstrap-responsive.min.css" />
+		href="../../css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet"
+		href="../../css/bootstrap-responsive.min.css" />
 
 
 	<script type="text/javascript">
@@ -66,40 +67,48 @@
 
 		<header class="header">
 		<div>
-		<p:graphicImage value="../../imgs/logo_accenture.png" styleClass="logo" />
+			<p:graphicImage value="../../imgs/logo_accenture.png"
+				styleClass="logo" />
 		</div>
 
-		<div class="headerText">
-
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Nome: " />
-				<p:outputLabel value="#{MBUsuarios.usuario.nome}"
-					style="padding-left:4px;" />
-
-			</h:panelGrid>
-		</div>
-
-		<div class="versao">ACCPORTAL - TESTE</div>
+		<div class="versao">ACCPORTAL - TESTE 1.0</div>
 		</header>
 		<!-- .header-->
+		<!-- .content -->
 
+		<main class="content"> <h:form id="formMenu">
 
+			<!-- Navigation -->
+			<p:menubar autoDisplay="true" styleClass="menu">
+				<p:menuitem value="Home"
+					action="../../comum/principal.faces?faces-redirect=true"
+					icon="home" />
+				<p:submenu label="Cadastros" icon="btcadastro">
+					<p:menuitem value="Alunos"
+						url="/pages/cadastros/gerenciarAlunos.faces?faces-redirect=true" />
+
+				</p:submenu>
+				
+				<p:menuitem value="Sair" style="float:center;"
+						action="#{MBAlunos.logout()}" ajax="false" icon="btlogout" />
+
+			</p:menubar>
+		</h:form> <ui:insert name="body" /> </main>
 		<!-- .content -->
 
 	</div>
 	<!-- .wrapper -->
 
 	<footer class="footer">
-    <div class="connect">
-                <a href="https://www.facebook.com/accenture/" target="_blank">
-                    <img src="../../imgs/facebook.png" /></a> 
-                <a href="https://twitter.com/accenture" target="_blank">
-                    <img src="../../imgs/twitter.png" /></a>      
-            </div>
+	<div class="connect">
+		<a href="https://www.facebook.com/accenture/" target="_blank"> <img
+			src="../../imgs/facebook.png" /></a> <a
+			href="https://twitter.com/accenture" target="_blank"> <img
+			src="../../imgs/twitter.png" /></a>
+	</div>
 
-	 <div class="direito">
-                © 2017 ACCPORTAL (Diretoria de Tecnologia da Informaçao). Todos os direitos reservados.
-            </div>
+	<div class="direito">© 2017 ACCPORTAL (Diretoria de Tecnologia da
+		Informaçao). Todos os direitos reservados.</div>
 	</footer>
 	<!-- .footer -->
 

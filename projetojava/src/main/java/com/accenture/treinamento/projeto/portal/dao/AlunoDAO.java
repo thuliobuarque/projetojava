@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
 import com.accenture.treinamento.projeto.portal.model.AlunoBean;
@@ -13,22 +14,22 @@ public class AlunoDAO implements IAlunoDAO {
 
 	private Connection conexao = null;
 
-	public AlunoBean autenticarAluno(AlunoBean usuario)
+	public AlunoBean autenticarAluno(AlunoBean aluno)
 			throws ProjetoException {
 
-		System.out.println(usuario.getLogin() + usuario.getSenha());
+		System.out.println(aluno.getLogin() + aluno.getSenha());
 
 		conexao = ConnectionFactory.getConnection();
 
-		String sql = "select usuarios.login, usuarios.senha, usuarios.nome from acl.usuarios where usuarios.login = ? and usuarios.senha = ?";
+		String sql = "select login, senha, nome from acl.alunos where alunos.login = ? and alunos.senha = ?";
 
 		AlunoBean ub = null;
 
 		try {
 
 			PreparedStatement pstmt = conexao.prepareStatement(sql);
-			pstmt.setString(1, usuario.getLogin().toUpperCase());
-			pstmt.setString(2, usuario.getSenha().toUpperCase());
+			pstmt.setString(1, aluno.getLogin().toUpperCase());
+			pstmt.setString(2, aluno.getSenha().toUpperCase());
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -53,13 +54,12 @@ public class AlunoDAO implements IAlunoDAO {
 
 	public boolean cadastrarAluno(AlunoBean aluno) throws ProjetoException {
 
-		String sql = "insert into acl.alunos (login, senha) values (?, ?)";
+		String sql = "insert into acl.alunos (nome) values (?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, aluno.getLogin());
-			stmt.setString(2, aluno.getSenha());
+			stmt.setString(1, aluno.getNome());
 			stmt.execute();
 
 			conexao.commit();
@@ -80,13 +80,12 @@ public class AlunoDAO implements IAlunoDAO {
 	public boolean alterarAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean alterou = false;
-		String sql = "update acl.alunos set nome = ?, senha = ? where idalunos = ?";
+		String sql = "update acl.alunos set nome = ? where idalunos = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, aluno.getNome());
-			stmt.setString(2, aluno.getSenha());
-			stmt.setInt(3, aluno.getId_aluno());
+			stmt.setInt(2, aluno.getId_aluno());
 			stmt.executeUpdate();
 			conexao.commit();
 
@@ -133,7 +132,7 @@ public class AlunoDAO implements IAlunoDAO {
 	
 	public ArrayList<AlunoBean> listaAluno() {
 
-		String sql = "select idalunos, login, senha, nome from acl.alunos order by nome";
+		String sql = "select idalunos, login, senha, nome, cpf from acl.alunos order by nome";
 
 		ArrayList<AlunoBean> lista = new ArrayList();
 		try {
@@ -148,6 +147,7 @@ public class AlunoDAO implements IAlunoDAO {
 				a.setLogin(rs.getString("login"));
 				a.setSenha(rs.getString("senha"));
 				a.setNome(rs.getString("nome"));
+				a.setCpf(rs.getString("cpf"));
 
 
 				lista.add(a);
@@ -164,5 +164,47 @@ public class AlunoDAO implements IAlunoDAO {
 		}
 		return lista;
 	}
+	
+	 public List<AlunoBean> buscarTipoAluno(String valor, Integer tipo) throws ProjetoException {
+	  		
+	      	
+   		 String sql = "select idalunos, nome from acl.alunos where";
+   		
+   		if (tipo == 1) {
+   			sql += " alunos.nome like ? order by alunos.nome ";
+   		}
+   		List<AlunoBean> lista = new ArrayList<>();
+   	
+   		try {
+   			conexao = ConnectionFactory.getConnection();
+   			PreparedStatement stmt = conexao.prepareStatement(sql);
+   			if (tipo == 1) {
+   				stmt.setString(1, "%" + valor.toUpperCase() + "%");
+   			}
+
+   			ResultSet rs = stmt.executeQuery();
+
+   			while (rs.next()) {
+   				AlunoBean c = new AlunoBean();
+
+   				c.setId_aluno(rs.getInt("idalunos"));
+				c.setNome(rs.getString("nome"));
+
+   				lista.add(c);
+
+   			}
+   		} catch (SQLException ex) {
+   			ex.printStackTrace();
+   			// throw new RuntimeException(ex); //
+   		} finally {
+   			try {
+   				conexao.close();
+   			} catch (Exception ex) {
+   				ex.printStackTrace();
+   				System.exit(1);
+   			}
+   		}
+   		return lista;
+   	}
 
 }
