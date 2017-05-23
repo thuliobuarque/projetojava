@@ -20,7 +20,7 @@ import com.accenture.treinamento.projeto.portal.model.CursoBean;
 /**
  *
  * @author Thulio, Thayse, Thales, Caio, Priscila, Veridiana
- * @since 21/05/2017
+ * @since 17/05/2017
  */
 
 @ManagedBean(name = "MBCurso")

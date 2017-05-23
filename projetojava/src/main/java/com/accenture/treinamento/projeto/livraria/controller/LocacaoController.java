@@ -2,16 +2,21 @@ package com.accenture.treinamento.projeto.livraria.controller;
 
 import java.util.ArrayList;
 
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
-import com.accenture.treinamento.projeto.livraria.dao.AutorDAO;
 import com.accenture.treinamento.projeto.livraria.dao.LocacaoDAO;
 import com.accenture.treinamento.projeto.livraria.model.LocacaoBean;
 
+/**
+*
+* @author Thulio, thayse, thales, caio, priscila, veridiana
+* @since 17/05/2017
+*/
 @ManagedBean
 @SessionScoped
 public class LocacaoController {

@@ -22,9 +22,9 @@ import com.accenture.treinamento.projeto.util.SessionUtil;
  * @since 17/05/2017
  */
 
-@ManagedBean(name = "MBAlunos")
+@ManagedBean(name = "MBPessoa")
 @ViewScoped
-public class AlunoController {
+public class PessoaController {
 
 	// OBJETOS E CLASSES
 	private AlunoBean aluno;
@@ -38,7 +38,7 @@ public class AlunoController {
 	private String campoBuscaAluno;
 	private String statusAluno;
 
-	public AlunoController() {
+	public PessoaController() {
 		// INSTANCIAS
 		aluno = new AlunoBean();
 

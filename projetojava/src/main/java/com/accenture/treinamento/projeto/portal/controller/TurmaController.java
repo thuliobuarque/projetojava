@@ -12,15 +12,13 @@ import org.primefaces.context.RequestContext;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.portal.controller.TurmaController;
-import com.accenture.treinamento.projeto.portal.model.DisciplinaBean;
 import com.accenture.treinamento.projeto.portal.model.TurmaBean;
-import com.accenture.treinamento.projeto.portal.dao.DisciplinaDAO;
 import com.accenture.treinamento.projeto.portal.dao.TurmaDAO;
 
 /**
  *
  * @author Thulio, thayse, thales, caio, priscila, veridiana
- * @since 21/05/2017
+ * @since 17/05/2017
  */
 
 @ManagedBean(name = "MBTurma")

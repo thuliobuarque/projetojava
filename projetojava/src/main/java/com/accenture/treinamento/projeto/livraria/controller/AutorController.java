@@ -14,6 +14,11 @@ import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.livraria.dao.AutorDAO;
 import com.accenture.treinamento.projeto.livraria.model.AutorBean;
 
+/**
+*
+* @author Thulio, thayse, thales, caio, priscila, veridiana
+* @since 17/05/2017
+*/
 @ManagedBean
 @SessionScoped
 public class AutorController {

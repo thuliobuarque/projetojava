@@ -1,6 +1,7 @@
 package com.accenture.treinamento.projeto.livraria.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -13,6 +14,12 @@ import org.primefaces.context.RequestContext;
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.livraria.dao.ObraDAO;
 import com.accenture.treinamento.projeto.livraria.model.LivroBean;
+
+/**
+*
+* @author Thulio, thayse, thales, caio, priscila, veridiana
+* @since 17/05/2017
+*/
 
 @ManagedBean
 @SessionScoped
