@@ -19,19 +19,19 @@
 					<center>
 						<p:panelGrid columns="2" styleClass="semBorda">
 							<p:outputLabel value="Usuário: " for="usuario" />
-							<p:inputText id="usuario" size="20" required="true"
+							<p:inputText id="usuario" size="20" required="false"
 								requiredMessage="Informe o usuário."
 								value="#{MBAlunos.aluno.login}" />
 
 							<p:outputLabel value="Senha: " for="senha" />
-							<p:password id="senha" size="20" required="true"
+							<p:password id="senha" size="20" required="false"
 								requiredMessage="Informe a Senha."
 								value="#{MBAlunos.aluno.senha}" maxlength="200" />
 						</p:panelGrid>
 
 						<p:separator />
 						<p:commandButton value="Entrar" icon="entrar"
-							action="#{MBAlunos.login()}" update="growl, pnl" />
+							action="#{MBAlunos.loginTeste()}" update="growl, pnl" />
 					</center>
 				</p:panel>
 			</center>

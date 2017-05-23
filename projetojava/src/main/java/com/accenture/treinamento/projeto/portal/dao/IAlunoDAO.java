@@ -7,7 +7,6 @@ import com.accenture.treinamento.projeto.portal.model.AlunoBean;
 
 public interface IAlunoDAO {
 
-	public abstract AlunoBean autenticarAluno(AlunoBean usuario) throws ProjetoException;
 	public abstract boolean cadastrarAluno(AlunoBean usuario) throws ProjetoException;
 	public abstract boolean alterarAluno(AlunoBean usuario) throws ProjetoException;
 	public abstract boolean excluirAluno(AlunoBean usuario) throws ProjetoException;

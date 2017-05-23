@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
 import com.accenture.treinamento.projeto.portal.model.AlunoBean;
@@ -14,54 +15,26 @@ public class AlunoDAO implements IAlunoDAO {
 
 	private Connection conexao = null;
 
-	public AlunoBean autenticarAluno(AlunoBean aluno)
-			throws ProjetoException {
-
-		System.out.println(aluno.getLogin() + aluno.getSenha());
-
-		conexao = ConnectionFactory.getConnection();
-
-		String sql = "select login, senha, nome from acl.alunos where alunos.login = ? and alunos.senha = ?";
-
-		AlunoBean ub = null;
-
-		try {
-
-			PreparedStatement pstmt = conexao.prepareStatement(sql);
-			pstmt.setString(1, aluno.getLogin().toUpperCase().trim());
-			pstmt.setString(2, aluno.getSenha().toUpperCase().trim());
-
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				ub = new AlunoBean();
-				ub.setLogin(rs.getString("login"));
-				ub.setSenha(rs.getString("senha"));
-				ub.setNome(rs.getString("nome"));
-			}
-
-			return ub;
-		} catch (SQLException ex) {
-			throw new ProjetoException(ex);
-		} finally {
-			try {
-				conexao.close();
-			} catch (Exception ex) {
-				// TODO: handle exception
-				ex.printStackTrace();
-			}
-		}
-	}
-
 	public boolean cadastrarAluno(AlunoBean aluno) throws ProjetoException {
 
-		String sql = "insert into acl.alunos (nome, cpf) values (?, ?)";
+		String sql = "insert into mydb.aluno (nome, cpf) values (?, ?) returning id_aluno";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, aluno.getNome().toUpperCase().trim());
 			stmt.setString(2, aluno.getCpf().replaceAll("[^0-9]", ""));
-			stmt.execute();
+			
+			ResultSet rs = stmt.executeQuery();  
+	            if(rs.next()) { 
+	            	 aluno.setId_aluno(rs.getInt("id_aluno"));
+	            	 String sql2="insert into mydb.pessoa (id_pessoa, login, senha) values (?, ?, ?)";
+                     stmt = conexao.prepareStatement(sql2);
+                     stmt.setInt(1, aluno.getId_aluno());  
+                     stmt.setString(2, aluno.getLogin().toUpperCase().trim());
+                     stmt.setString(3, aluno.getSenha().toUpperCase().trim());
+                     stmt.execute();
+	            }
 
 			conexao.commit();
 
@@ -81,7 +54,7 @@ public class AlunoDAO implements IAlunoDAO {
 	public boolean alterarAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean alterou = false;
-		String sql = "update acl.alunos set nome = ?, cpf = ? where idalunos = ?";
+		String sql = "update mydb.aluno set nome = ?, cpf = ? where id_aluno = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -108,7 +81,7 @@ public class AlunoDAO implements IAlunoDAO {
 	public boolean excluirAluno(AlunoBean aluno)
 			throws ProjetoException {
 		boolean excluir = false;
-		String sql = "delete from acl.alunos where idalunos = ?";
+		String sql = "delete from mydb.aluno where id_aluno = ?";
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -134,7 +107,7 @@ public class AlunoDAO implements IAlunoDAO {
 	
 	public ArrayList<AlunoBean> listaAluno() {
 
-		String sql = "select idalunos, login, senha, nome, cpf from acl.alunos order by nome";
+		String sql = "select id_aluno, nome, cpf from mydb.aluno order by nome";
 
 		ArrayList<AlunoBean> lista = new ArrayList();
 		try {
@@ -145,9 +118,7 @@ public class AlunoDAO implements IAlunoDAO {
 			while (rs.next()) {
 				AlunoBean a = new AlunoBean();
 
-				a.setId_aluno(rs.getInt("idalunos"));
-				a.setLogin(rs.getString("login"));
-				a.setSenha(rs.getString("senha"));
+				a.setId_aluno(rs.getInt("id_aluno"));
 				a.setNome(rs.getString("nome"));
 				a.setCpf(rs.getString("cpf"));
 
@@ -170,13 +141,13 @@ public class AlunoDAO implements IAlunoDAO {
 	 public List<AlunoBean> buscarTipoAluno(String valor, Integer tipo) throws ProjetoException {
 	  		
 	      	
-   		 String sql = "select idalunos, nome, cpf from acl.alunos where";
+   		 String sql = "select id_aluno, nome, cpf from mydb.aluno where";
    		
    		if (tipo == 1) {
-   			sql += " alunos.nome like ? order by alunos.nome ";
+   			sql += " aluno.nome like ? order by aluno.nome ";
    		}
    		if (tipo == 2) {
-   			sql += " alunos.cpf like ? order by alunos.nome ";
+   			sql += " aluno.cpf like ? order by aluno.nome ";
    		}
    		List<AlunoBean> lista = new ArrayList<>();
    	
@@ -195,7 +166,7 @@ public class AlunoDAO implements IAlunoDAO {
    			while (rs.next()) {
    				AlunoBean c = new AlunoBean();
 
-   				c.setId_aluno(rs.getInt("idalunos"));
+   				c.setId_aluno(rs.getInt("id_aluno"));
 				c.setNome(rs.getString("nome"));
 				c.setCpf(rs.getString("cpf"));
 

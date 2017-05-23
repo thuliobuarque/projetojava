@@ -55,22 +55,10 @@ public class AlunoController {
 	}
 
 	// METODO DE AUTENTICAR ALUNO
-	public String login() throws ProjetoException {
+	public String loginTeste() throws ProjetoException {
 
-		AlunoDAO ud = new AlunoDAO();
-		aluno = ud.autenticarAluno(aluno);
-		//recoverDataFromSessionAluno();
-		if (aluno == null) {
-			FacesContext fct = FacesContext.getCurrentInstance();
-			fct.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Usuário ou senha inválidos!", "Erro"));
-
-			return "";
-		} else {			
-			 //HttpSession session = SessionUtil.getSession();
-             //session.setAttribute("usuario", aluno.getNome());
-			return "/pages/comum/principal.faces?faces-redirect=true";
-		}
+    return "/pages/comum/principal.faces?faces-redirect=true";
+	
 	}
 
 	// METODO DE ADCIONAR ALUNO
