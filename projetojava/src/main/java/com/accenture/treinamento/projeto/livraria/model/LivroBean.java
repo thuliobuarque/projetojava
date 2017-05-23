@@ -4,7 +4,7 @@ import java.sql.Date;
 
 
 
-public class ObraBean {
+public class LivroBean {
 	
 
 	private int id;

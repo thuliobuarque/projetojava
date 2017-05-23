@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
-import com.accenture.treinamento.projeto.livraria.model.ObraBean;
+import com.accenture.treinamento.projeto.livraria.model.LivroBean;
 
 public class ObraDAO implements IObraDAO {
 
 	private Connection conexao = null;
 	
-	public boolean cadastrarObra(ObraBean obra) {
+	public boolean cadastrarObra(LivroBean obra) {
 		
 		String sql = "insert into acl.obra (titulo,nome,anoPublicacao,editora,resumo,classificacao,quantidade) values (?,?,?,?,?,?,?)";
 		
@@ -45,7 +45,7 @@ public class ObraDAO implements IObraDAO {
 		
 	}
 	
-	public boolean alterarObra(ObraBean obra)
+	public boolean alterarObra(LivroBean obra)
 			throws ProjetoException {
 		boolean alterou = false;
 		String sql = "update acl.obra set nome ?, where codigo = ?";
@@ -76,7 +76,7 @@ public class ObraDAO implements IObraDAO {
 		}
 	}
 	
-	public boolean excluirObra(ObraBean obra)
+	public boolean excluirObra(LivroBean obra)
 			throws ProjetoException {
 		boolean excluir = false;
 		String sql = "delete from acl.obra where codigo = ?";
@@ -102,18 +102,18 @@ public class ObraDAO implements IObraDAO {
 		}
 	}
 	
-	public ArrayList<ObraBean> listaObra() {
+	public ArrayList<LivroBean> listaObra() {
 
 		String sql = "select id , titulo, ano_publicacao, editora, classificacao, quantidade from acl.obra";
 
-		ArrayList<ObraBean> lista = new ArrayList();
+		ArrayList<LivroBean> lista = new ArrayList();
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
-				ObraBean a = new ObraBean();
+				LivroBean a = new LivroBean();
 
 				a.setId(rs.getInt("id"));
 				a.setTitulo(rs.getString("titulo"));

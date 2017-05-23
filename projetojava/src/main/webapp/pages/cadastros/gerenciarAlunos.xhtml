@@ -89,10 +89,11 @@
 									onclick="PF('dlgAltAluno').show()"
 									process="@this, :formAltAluno"
 									update=":formAltAluno:pnlAltAluno">
+									
 									<f:setPropertyActionListener value="#{tab}"
 										target="#{MBAlunos.aluno}" />
 
-									<!-- actionListener="#{MBAlunos.limparDados()}" -->
+						
 								</p:menuitem>
 
 								<p:menuitem value="Excluir" icon="trash"

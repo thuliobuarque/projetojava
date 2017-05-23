@@ -12,18 +12,18 @@ import org.primefaces.context.RequestContext;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.livraria.dao.ObraDAO;
-import com.accenture.treinamento.projeto.livraria.model.ObraBean;
+import com.accenture.treinamento.projeto.livraria.model.LivroBean;
 
 @ManagedBean
 @SessionScoped
 public class ObraController {
 
-	private ObraBean obra;
+	private LivroBean obra;
 
-	private List<ObraBean> listaObra;
+	private List<LivroBean> listaObra;
 
 	public ObraController() {
-		obra = new ObraBean();
+		obra = new LivroBean();
 
 		listaObra = new ArrayList<>();
 		listaObra = null;
@@ -96,15 +96,15 @@ public class ObraController {
 		obra = null;
 	}
 
-	public ObraBean getObra() {
+	public LivroBean getObra() {
 		return obra;
 	}
 
-	public void setObra(ObraBean obra) {
+	public void setObra(LivroBean obra) {
 		this.obra = obra;
 	}
 
-	public List<ObraBean> getListaObra() {
+	public List<LivroBean> getListaObra() {
 		if (listaObra == null) {
 			ObraDAO adao = new ObraDAO();
 			listaObra = adao.listaObra();
@@ -113,7 +113,7 @@ public class ObraController {
 		return listaObra;
 	}
 
-	public void setListaObra(List<ObraBean> listaObra) {
+	public void setListaObra(List<LivroBean> listaObra) {
 		this.listaObra = listaObra;
 	}
 

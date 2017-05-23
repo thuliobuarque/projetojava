@@ -9,7 +9,7 @@ public class LocacaoBean {
 	private PessoaBean pessoa;
 	private Date dataLocacao;
 	private Date dataEntrega;
-	private ObraBean obra;
+	private LivroBean livro;
 	
 	public Integer getId() {
 		return id;
@@ -35,12 +35,13 @@ public class LocacaoBean {
 	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
-	public ObraBean getObra() {
-		return obra;
+	public LivroBean getLivro() {
+		return livro;
 	}
-	public void setObra(ObraBean obra) {
-		this.obra = obra;
+	public void setLivro(LivroBean livro) {
+		this.livro = livro;
 	}
+
 	
 
 }

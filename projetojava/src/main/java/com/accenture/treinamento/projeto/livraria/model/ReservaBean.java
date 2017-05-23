@@ -8,7 +8,7 @@ public class ReservaBean {
 	private Integer id;
 	private PessoaBean pessoa;
 	private Date dataRetirada;
-	private ObraBean obra;
+	private LivroBean livro;
 	
 	
 	public Integer getId() {
@@ -29,11 +29,12 @@ public class ReservaBean {
 	public void setDataRetirada(Date dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
-	public ObraBean getObra() {
-		return obra;
+	public LivroBean getLivro() {
+		return livro;
 	}
-	public void setObra(ObraBean obra) {
-		this.obra = obra;
+	public void setLivro(LivroBean livro) {
+		this.livro = livro;
 	}
+
 	
 }

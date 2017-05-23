@@ -51,8 +51,6 @@
 			<artifactId>jstl-api</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
-		
 
 		<!-- https://mvnrepository.com/artifact/org.glassfish.web/jstl-impl -->
 		<dependency>
@@ -80,11 +78,13 @@
 			<artifactId>jsf-api</artifactId>
 			<version>2.2.2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<version>2.2.2</version>
+			<version>2.2.11</version>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -108,19 +108,21 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api -->
+
+		<!-- https://mvnrepository.com/artifact/xdoclet/xdoclet -->
 		<dependency>
-    		<groupId>com.sun.faces</groupId>
-    		<artifactId>jsf-impl</artifactId>
-    		<version>2.2.12</version>
+			<groupId>xdoclet</groupId>
+			<artifactId>xdoclet</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.6.0</version>
 		</dependency>
 
 
 	</dependencies>
-
-
-
-
-
 </project>
