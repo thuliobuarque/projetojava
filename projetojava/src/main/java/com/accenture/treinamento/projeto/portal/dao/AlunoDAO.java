@@ -10,6 +10,7 @@ import java.util.List;
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
 import com.accenture.treinamento.projeto.portal.model.AlunoBean;
+import com.mysql.jdbc.Statement;
 
 public class AlunoDAO implements IAlunoDAO {
 
@@ -26,6 +27,48 @@ public class AlunoDAO implements IAlunoDAO {
 			stmt.setString(2, aluno.getCpf().replaceAll("[^0-9]", ""));
 			
 			ResultSet rs = stmt.executeQuery();  
+	            if(rs.next()) { 
+	            	 aluno.setId_aluno(rs.getInt("id_aluno"));
+	            	 String sql2="insert into mydb.pessoa (id_pessoa, login, senha) values (?, ?, ?)";
+                     stmt = conexao.prepareStatement(sql2);
+                     stmt.setInt(1, aluno.getId_aluno());  
+                     stmt.setString(2, aluno.getLogin().toUpperCase().trim());
+                     stmt.setString(3, aluno.getSenha().toUpperCase().trim());
+                     stmt.execute();
+	            }
+
+			conexao.commit();
+
+			return true;
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			try {
+				conexao.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				System.exit(1);
+			}
+		}
+	}
+	
+	public boolean cadastrarAlunoMysql(AlunoBean aluno) throws ProjetoException {
+
+		String sql = "insert into mydb.aluno (nome, cpf) values (?, ?)";
+
+		try {
+			conexao = ConnectionFactory.getConnection();
+			PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, aluno.getNome().toUpperCase().trim());
+			stmt.setString(2, aluno.getCpf().replaceAll("[^0-9]", ""));
+			
+			
+			    /*ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+		        if (rs.next()) {
+		        	 aluno.setId_aluno(rs.getInt("LAST_INSERT_ID()"));
+		        }*/
+			
+			ResultSet rs = stmt.getGeneratedKeys();  
 	            if(rs.next()) { 
 	            	 aluno.setId_aluno(rs.getInt("id_aluno"));
 	            	 String sql2="insert into mydb.pessoa (id_pessoa, login, senha) values (?, ?, ?)";

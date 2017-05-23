@@ -62,10 +62,10 @@ public class AlunoController {
 	}
 
 	// METODO DE ADCIONAR ALUNO
-	public void cadastrarAluno() throws ProjetoException {
+	public void cadastrarAlunoMysql() throws ProjetoException {
 
 		AlunoDAO adao = new AlunoDAO();
-		boolean cadastrou = adao.cadastrarAluno(aluno);
+		boolean cadastrou = adao.cadastrarAlunoMysql(aluno);
 
 		if (cadastrou == true) {
 

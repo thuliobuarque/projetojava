@@ -8,7 +8,7 @@
 
 	<ui:define name="body">
 
-			<p:commandButton value="Novo" icon="novo" actionListener="#{MBAlunos.LimparObjeto()}"
+			<p:commandButton value="Novo" icon="novo" 
 				style="margin-top:4px; margin-bottom:10px;"
 				onclick="PF('dlgNovoUsuario').show();" />
 
@@ -22,21 +22,35 @@
 				<p:panel>
 
 					<p:panelGrid columns="2" styleClass="semBorda">
+						<h:outputLabel value="Nome Completo:" />
+						<p:inputText id="nome" value="#{MBAlunos.aluno.nome}" size="40"
+							required="true" placeholder="Digite seu nome completo "
+							requiredMessage="E necessario informar o nome completo">
+						</p:inputText>
+
+						<h:outputLabel value="CPF:" />
+						<p:inputMask id="cpf" value="#{MBAlunos.aluno.cpf}" maxlength="11"
+							required="true" placeholder="Digite seu cpf"
+							requiredMessage="E necessario informar o cpf"
+							mask="999.999.999-99"></p:inputMask>
+
 						<h:outputLabel value="Login:" />
-						<p:inputText value="#{MBAlunos.aluno.login}" required="true"
+						<p:inputText id="login" value="#{MBAlunos.aluno.login}" size="40"
+							required="true" placeholder="Digite um login "
 							requiredMessage="E necessario informar o login">
 						</p:inputText>
 
-						<h:outputLabel value="Senha:" />
-						<p:inputText id="nome" value="#{MBAlunos.aluno.senha}"
-							required="true" requiredMessage="E necessario informar a senha">
-						</p:inputText>
+						<h:outputLabel value="Login:" />
+						<p:password id="senha" value="#{MBAlunos.aluno.senha}" size="40"
+							required="true" requiredMessage="E necessario informar a senha"
+							placeholder="Digite uma senha">
+						</p:password>
 					</p:panelGrid>
 				</p:panel>
 				<center>
 					<p:panelGrid columns="2" styleClass="semBorda">
 						<p:commandButton value="ok" icon="confirmar" ajax="false"
-							action="#{MBAlunos.cadastrarAluno()}"
+							action="#{MBAlunos.cadastrarAlunoMysql()}"
 							onclick="PF('dlgNovoUsuario').hide();"
 							update=":formNovoUsuario:msg" />
 
