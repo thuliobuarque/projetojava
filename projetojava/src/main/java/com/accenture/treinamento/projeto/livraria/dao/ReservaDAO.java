@@ -16,13 +16,12 @@ public class ReservaDAO implements IReservaDAO {
 
 	@Override
 	public boolean saveReserva(ReservaBean reserva) throws ProjetoException {
-		String query = "INSERT INTO acl.Reserva ( d_retirada) values (?)";
+		String query = "INSERT INTO acl.reserva (data_retirada) values (?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement ps = conexao.prepareStatement(query);
-			ps.setDate(1,
-					new java.sql.Date(reserva.getDataRetirada().getTime()));
+			ps.setDate(1,new java.sql.Date(reserva.getDataRetirada().getTime()));
 			ps.execute();
 
 			conexao.commit();
@@ -41,7 +40,7 @@ public class ReservaDAO implements IReservaDAO {
 
 	@Override
 	public boolean updateReserva(ReservaBean reserva) throws ProjetoException {
-		String query = "UPDATE acl.Reserva set d_retirada = ? where id_reserva = ?";
+		String query = "UPDATE acl.reserva set data_retirada = ? where id_reserva = ?";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
@@ -92,7 +91,7 @@ public class ReservaDAO implements IReservaDAO {
 	@Override
 	public ArrayList<ReservaBean> listReservas() throws ProjetoException {
 
-		String query = "SELECT * FROM acl.Reserva";
+		String query = "SELECT * FROM acl.reserva";
 
 		ArrayList<ReservaBean> lista = new ArrayList<>();
 
