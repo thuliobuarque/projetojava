@@ -28,8 +28,8 @@ public class AlunoDAO implements IAlunoDAO {
 		try {
 
 			PreparedStatement pstmt = conexao.prepareStatement(sql);
-			pstmt.setString(1, aluno.getLogin().toUpperCase());
-			pstmt.setString(2, aluno.getSenha().toUpperCase());
+			pstmt.setString(1, aluno.getLogin().toUpperCase().trim());
+			pstmt.setString(2, aluno.getSenha().toUpperCase().trim());
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -59,8 +59,8 @@ public class AlunoDAO implements IAlunoDAO {
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, aluno.getNome());
-			stmt.setString(2, aluno.getCpf());
+			stmt.setString(1, aluno.getNome().toUpperCase().trim());
+			stmt.setString(2, aluno.getCpf().replaceAll("[^0-9]", ""));
 			stmt.execute();
 
 			conexao.commit();

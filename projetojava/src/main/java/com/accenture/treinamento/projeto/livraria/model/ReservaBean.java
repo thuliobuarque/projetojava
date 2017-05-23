@@ -3,7 +3,7 @@ package com.accenture.treinamento.projeto.livraria.model;
 import java.sql.Date;
 import com.accenture.treinamento.projeto.portal.model.PessoaBean;
 
-public class ReservaoBean {
+public class ReservaBean {
 	
 	private Integer id;
 	private PessoaBean pessoa;
@@ -23,10 +23,10 @@ public class ReservaoBean {
 	public void setPessoa(PessoaBean pessoa) {
 		this.pessoa = pessoa;
 	}
-	public Date getRetirada() {
+	public Date getDataRetirada() {
 		return dataRetirada;
 	}
-	public void setRetirada(Date dataRetirada) {
+	public void setDataRetirada(Date dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 	public ObraBean getObra() {

@@ -1,5 +1,10 @@
 package com.accenture.treinamento.projeto.portal.dao;
 
+import java.util.List;
+
+import com.accenture.treinamento.projeto.exception.ProjetoException;
+import com.accenture.treinamento.projeto.portal.model.CursoBean;
+
 public interface ICursoDAO {
 	
 	public abstract boolean cadastrarCurso(CursoBean curso) throws ProjetoException;

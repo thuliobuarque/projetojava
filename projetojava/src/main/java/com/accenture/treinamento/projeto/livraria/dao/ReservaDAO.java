@@ -15,13 +15,14 @@ public class ReservaDAO implements IReservaDAO {
 	private Connection conexao = null;
 
 	@Override
-	public boolean saveReserva(ReservaBean Reserva) throws ProjetoException {
+	public boolean saveReserva(ReservaBean reserva) throws ProjetoException {
 		String query = "INSERT INTO acl.Reserva ( d_retirada) values (?)";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement ps = conexao.prepareStatement(query);
-			ps.setDate(1, Reserva.getDataRetirada());
+			ps.setDate(1,
+					new java.sql.Date(reserva.getDataRetirada().getTime()));
 			ps.execute();
 
 			conexao.commit();
@@ -39,13 +40,15 @@ public class ReservaDAO implements IReservaDAO {
 	}
 
 	@Override
-	public boolean updateReserva(ReservaBean Reserva) throws ProjetoException {
-		String query = "UPDATE acl.Reserva set d_retirada = ?";
+	public boolean updateReserva(ReservaBean reserva) throws ProjetoException {
+		String query = "UPDATE acl.Reserva set d_retirada = ? where id_reserva = ?";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement ps = conexao.prepareStatement(query);
-			ps.setDate(1, Reserva.getDataReserva());
+			ps.setDate(1,
+					new java.sql.Date(reserva.getDataRetirada().getTime()));
+			ps.setInt(2, reserva.getId());
 			ps.executeUpdate();
 
 			conexao.commit();
@@ -63,13 +66,13 @@ public class ReservaDAO implements IReservaDAO {
 	}
 
 	@Override
-	public boolean removeReserva(ReservaBean Reserva) throws ProjetoException {
-		String query = "DELETE acl.Reserva WHERE  d_retirada = ?";
+	public boolean removeReserva(ReservaBean reserva) throws ProjetoException {
+		String query = "DELETE acl.reserva WHERE  id_reserva = ?";
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement ps = conexao.prepareStatement(query);
-			ps.setDate(1, Reserva.getDataRetirada());
+			ps.setInt(1, reserva.getId());
 			ps.executeUpdate();
 
 			conexao.commit();
@@ -87,21 +90,23 @@ public class ReservaDAO implements IReservaDAO {
 	}
 
 	@Override
-	public ArrayList<ReservaBean> listreservas() throws ProjetoException {
-		ArrayList<ReservaBean> reservas = new ArrayList<>();
+	public ArrayList<ReservaBean> listReservas() throws ProjetoException {
 
 		String query = "SELECT * FROM acl.Reserva";
+
+		ArrayList<ReservaBean> lista = new ArrayList<>();
 
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement ps = conexao.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ReservaBean Reserva = new ReservaBean();
+				ReservaBean reserva = new ReservaBean();
 
-				Reserva.setId(rs.getInt("id_Reserva"));
-				Reserva.setDataReserva(rs.getDate("d_Retirada"));
-				reserva.add(Reserva);
+				reserva.setId(rs.getInt("id_reserva"));
+				reserva.setDataRetirada(rs.getDate("data_retirada"));
+
+				lista.add(reserva);
 			}
 		} catch (SQLException e) {
 			throw new ProjetoException(e);
@@ -112,7 +117,7 @@ public class ReservaDAO implements IReservaDAO {
 				e.printStackTrace();
 			}
 		}
-		return reservas;
+		return lista;
 	}
 
 }

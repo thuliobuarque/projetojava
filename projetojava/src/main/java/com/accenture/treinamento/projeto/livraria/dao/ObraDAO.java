@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.factory.ConnectionFactory;
 import com.accenture.treinamento.projeto.livraria.model.ObraBean;
-import com.accenture.treinamento.projeto.portal.model.AlunoBean;
-import com.accenture.treinamento.projeto.portal.model.obraBean;
-
-
-
 
 public class ObraDAO implements IObraDAO {
 
@@ -26,7 +21,13 @@ public class ObraDAO implements IObraDAO {
 		try {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, obra.getNome());
+			stmt.setString(1, obra.getTitulo());
+			stmt.setString(2, obra.getNome());
+			stmt.setDate(3, new java.sql.Date(obra.getAnoPublicacao().getTime()));
+			stmt.setString(4, obra.getEditora());
+			stmt.setString(5, obra.getResumo());
+			stmt.setString(6, obra.getClassificacao());
+			stmt.setInt(7, obra.getQuantidade());
 			stmt.execute();
 			
 			conexao.commit();
@@ -52,12 +53,12 @@ public class ObraDAO implements IObraDAO {
 			conexao = ConnectionFactory.getConnection();
 			PreparedStatement stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, obra.getNome());
-			stmt.setInt(2, obra.getCodigo());
-			stmt.setInt(3, obra.getAnoPublicacao());
-			stmt.setString(4, obra.getEditora());
-			stmt.setString(5, obra.getResumo());
-			stmt.setString(6, obra.getClassificacao());
-			stmt.setInt(7, obra.getQuantidade());
+			stmt.setDate(2, new java.sql.Date(obra.getAnoPublicacao().getTime()));
+			stmt.setString(3, obra.getEditora());
+			stmt.setString(4, obra.getResumo());
+			stmt.setString(5, obra.getClassificacao());
+			stmt.setInt(6, obra.getQuantidade());
+			stmt.setInt(7, obra.getId());
 			stmt.executeUpdate();
 			conexao.commit();
 			
@@ -103,7 +104,7 @@ public class ObraDAO implements IObraDAO {
 	
 	public ArrayList<ObraBean> listaObra() {
 
-		String sql = "select codigo, nome from acl.obra order by nome";
+		String sql = "select id , titulo, ano_publicacao, editora, classificacao, quantidade from acl.obra";
 
 		ArrayList<ObraBean> lista = new ArrayList();
 		try {
@@ -116,7 +117,7 @@ public class ObraDAO implements IObraDAO {
 
 				a.setId(rs.getInt("id"));
 				a.setTitulo(rs.getString("titulo"));
-				a.setAnoPublicacao(rs.getInt("anoPublicacao"));
+				a.setAnoPublicacao(rs.getDate("anoPublicacao"));
 				a.setEditora(rs.getString("editora"));
 				a.setClassificacao(rs.getString("classidicacao"));
 				a.setQuantidade(rs.getInt("quantidade"));	

@@ -15,6 +15,7 @@ import com.accenture.treinamento.projeto.livraria.model.ReservaBean;
 @ManagedBean
 @SessionScoped
 public class ReservaController {
+	
 	private ReservaBean Reserva;
 	private ArrayList<ReservaBean> listaReservas;
 
@@ -78,8 +79,8 @@ public class ReservaController {
 
 	public ArrayList<ReservaBean> getListaReservas() throws ProjetoException {
 		if (listaReservas == null) {
-			ReservaDAO retiradadao = new ReservaDAO();
-			listaReservas = retiradadao.listReservas();
+			ReservaDAO rdao = new ReservaDAO();
+			listaReservas = rdao.listReservas();
 		}
 		return listaReservas;
 	}

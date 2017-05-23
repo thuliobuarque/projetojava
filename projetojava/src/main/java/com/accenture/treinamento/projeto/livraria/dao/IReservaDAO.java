@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import com.accenture.treinamento.projeto.exception.ProjetoException;
 import com.accenture.treinamento.projeto.livraria.model.LocacaoBean;
+import com.accenture.treinamento.projeto.livraria.model.ReservaBean;
 
-public interface IreservaDAO {
+public interface IReservaDAO {
 	
-	public boolean saveLocacao(ReservaBean reserva) throws ProjetoException;
-	public boolean updateLocacao(ReservaBean reserva) throws ProjetoException;
-	public boolean removeLocacao(ReservaBean reserva) throws ProjetoException;
-	public ArrayList<LocacaoBean> listLocacoes() throws ProjetoException;
+	public boolean saveReserva(ReservaBean reserva) throws ProjetoException;
+	public boolean updateReserva(ReservaBean reserva) throws ProjetoException;
+	public boolean removeReserva(ReservaBean reserva) throws ProjetoException;
+	public ArrayList<ReservaBean> listReservas() throws ProjetoException;
 
 }
